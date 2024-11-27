@@ -58,6 +58,7 @@ func main() {
 	e.GET("/users/:id", getUser)
 
 	e.POST("/binding/register", binding.HandleUserRegistration)
+	e.GET("/binding/search", binding.HandleSearchRequest)
 
 	e.Logger.Fatal(e.Start("127.0.0.1:8000"))
 }
