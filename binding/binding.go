@@ -18,6 +18,15 @@ type SearchRequest struct {
 	Page    int    `query:"page"`
 }
 
+type CPO struct {
+	Name string    `json:"name"`
+	Item []CPOItem `json:"item"`
+}
+
+type CPOItem struct {
+	Name string `json:"name"`
+}
+
 func HandleUserRegistration(c echo.Context) error {
 	registerRequest := new(RegisterRequest)
 	if err := c.Bind(registerRequest); err != nil {
@@ -57,4 +66,28 @@ func HandleSearchRequest(c echo.Context) error {
 	}
 
 	return c.String(http.StatusOK, "Searchcing for "+searchRequest.Keyword+" on page "+strconv.Itoa(searchRequest.Page))
+}
+
+func HandleCPO(c echo.Context) error {
+	cpo := new(CPO)
+
+	if err := c.Bind(cpo); err != nil {
+		return c.String(http.StatusBadRequest, err.Error())
+	}
+
+	if cpo.Name == "" {
+		return c.String(http.StatusBadRequest, "CPO name is required")
+	}
+
+	if cpo.Item == nil {
+		cpo.Item = []CPOItem{}
+	}
+
+	for _, cpoi := range cpo.Item {
+		if cpoi.Name == "" {
+			return c.String(http.StatusBadRequest, "CPO Item name is required")
+		}
+	}
+
+	return c.JSON(http.StatusOK, cpo)
 }

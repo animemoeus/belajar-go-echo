@@ -59,6 +59,7 @@ func main() {
 
 	e.POST("/binding/register", binding.HandleUserRegistration)
 	e.GET("/binding/search", binding.HandleSearchRequest)
+	e.POST("/binding/cpo", binding.HandleCPO)
 
 	e.Logger.Fatal(e.Start("127.0.0.1:8000"))
 }
