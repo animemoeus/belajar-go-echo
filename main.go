@@ -1,6 +1,7 @@
 package main
 
 import (
+	"belajar-echo/binding"
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -56,5 +57,7 @@ func main() {
 
 	e.GET("/users/:id", getUser)
 
-	e.Logger.Fatal(e.Start(":8000"))
+	e.POST("/binding/register", binding.HandleUserRegistration)
+
+	e.Logger.Fatal(e.Start("127.0.0.1:8000"))
 }
